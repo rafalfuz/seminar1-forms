@@ -8,16 +8,21 @@
 
 <hr>
 
-<form [formGroup]="myGroupForm">
+<form [formGroup]="myGroupForm" (ngSubmit)="sendForm()">
     <div>
         <label>
-            <input formControlName="firstMadeGroupControl" placeholder="firstMadeGC">
+            <input formControlName="firstMadeGroupControl" placeholder="firstMadeGC" [class.error]="myGroupForm.controls.firstMadeGroupControl.errors && myGroupForm.controls.firstMadeGroupControl.touched">
         </label>
     </div>
 
     <div>
         <label>
             <input formControlName="secondMadeGroupControl">
+            <ng-container *ngIf="myGroupForm.controls.secondMadeGroupControl.errors as errors">
+            <ng-container *ngIf=" myGroupForm.controls.secondMadeGroupControl.touched">
+                <p>To pole jest wymagane lub został w nim uzyty ciag znaków sth</p>
+            </ng-container>
+            </ng-container>
         </label>
     </div>
 
@@ -26,4 +31,12 @@
             <input formControlName="thirdMadeGroupControl">
         </label>
     </div>
+
+    <div>
+        <label>Plik do formularza
+            <input (change)="addFile($event)" type="file">
+        </label>
+    </div>
+
+    <button type="submit">Send</button>
 </form>
